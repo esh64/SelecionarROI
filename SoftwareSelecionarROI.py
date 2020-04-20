@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget,QMainWindow, QAction, qApp, QApplication, QFileDialog, QGridLayout, QLabel, QPushButton, QScrollArea, QVBoxLayout, QHBoxLayout
-from PyQt5.QtGui import QIcon, QPixmap, QPainter, QPen
+from PyQt5.QtGui import QIcon, QPixmap, QPainter, QPen, QDesktopServices
 import pickle
 
 class Label(QLabel):
@@ -230,10 +230,10 @@ class SelecionadorROI(QMainWindow):
         saveAct.setStatusTip('Salvar as coordenadas')
         saveAct.triggered.connect(self.file_save)
         
-        #--About menu options
-        aboutAct = QAction(QIcon(''), '&Sobre', self)        
-        aboutAct.setStatusTip('Sobre o Programa')
-        aboutAct.triggered.connect(qApp.quit)
+        ##--About menu options
+        #aboutAct = QAction(QIcon(''), '&Sobre', self)        
+        #aboutAct.setStatusTip('Sobre o Programa')
+        #aboutAct.triggered.connect(QDesktopServices.openUrl(Qt.QUrl('https://github.com/esh64/SelecionarROI/blob/master/README.md')))
         
         #menu bar
         self.menubar = self.menuBar()
@@ -244,9 +244,9 @@ class SelecionadorROI(QMainWindow):
         self.fileMenu.addAction(saveAct)
         self.fileMenu.addAction(exitAct)
         
-        #help menu
-        self.helpMenu = self.menubar.addMenu('&Ajuda')
-        self.helpMenu.addAction(aboutAct)
+        ##help menu
+        #self.helpMenu = self.menubar.addMenu('&Ajuda')
+        #self.helpMenu.addAction(aboutAct)
         
         #--------------End menu
         
