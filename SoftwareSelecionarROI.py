@@ -24,15 +24,19 @@ class Label(QLabel):
         pen=QPen(Qt.red, 5, Qt.SolidLine)
         qp.setPen(pen)
         if type(self.point1Roi)!=type(None) and type(self.point2Roi)!=type(None):
+            print(self.point2Roi['y'], self.point2Roi['x'])
             qp.drawLine(self.point1Roi['x'], self.point1Roi['y'], self.point1Roi['x'], self.point2Roi['y'])
             qp.drawLine(self.point2Roi['x'], self.point1Roi['y'], self.point2Roi['x'], self.point2Roi['y'])
             qp.drawLine(self.point1Roi['x'], self.point1Roi['y'], self.point2Roi['x'], self.point1Roi['y'])
             qp.drawLine(self.point1Roi['x'], self.point2Roi['y'], self.point2Roi['x'], self.point2Roi['y'])
         if type(self.point1fio1)!=type(None) and type(self.point2fio1)!=type(None):
+            print(self.point2fio1['x'], self.point2fio1['y'])
             qp.drawLine(self.point1fio1['x'], self.point1fio1['y'], self.point2fio1['x'], self.point2fio1['y'])
         if type(self.point1fio2)!=type(None) and type(self.point2fio2)!=type(None):
+            print(self.point2fio2['x'], self.point2fio2['y'])
             qp.drawLine(self.point1fio2['x'], self.point1fio2['y'], self.point2fio2['x'], self.point2fio2['y'])
         if type(self.point1fio3)!=type(None) and type(self.point2fio3)!=type(None):
+            print(self.point2fio3['x'], self.point2fio3['y'])
             qp.drawLine(self.point1fio3['x'], self.point1fio3['y'], self.point2fio3['x'], self.point2fio3['y'])
 
 
@@ -57,7 +61,7 @@ class PictureToSelectRoi(QWidget):
         self.scroll = QScrollArea()
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.scroll.setWidgetResizable(True)
+        #self.scroll.setWidgetResizable(True)
         
         #-----Layout
         
@@ -127,15 +131,16 @@ class PictureToSelectRoi(QWidget):
     
     def mouseMoveEvent2(self, QMouseEvent):
         if self.imageOpened:
-            if self.countClick==1:
-                if self.pressedButton=="ROI":
-                    self.label.point2Roi={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
-                elif self.pressedButton=="FIO1":
-                    self.label.point2fio1={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
-                elif self.pressedButton=="FIO2":
-                    self.label.point2fio2={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
-                elif self.pressedButton=="FIO3":
-                    self.label.point2fio3={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
+            #if self.countClick==1:
+            print({'x':QMouseEvent.x(), 'y':QMouseEvent.y()})
+            if self.pressedButton=="ROI":
+                self.label.point2Roi={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
+            elif self.pressedButton=="FIO1":
+                self.label.point2fio1={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
+            elif self.pressedButton=="FIO2":
+                self.label.point2fio2={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
+            elif self.pressedButton=="FIO3":
+                self.label.point2fio3={'x':QMouseEvent.x(), 'y':QMouseEvent.y()}
             self.label.update()
     
     def clickedButtonROI(self, pressed):
@@ -230,11 +235,6 @@ class SelecionadorROI(QMainWindow):
         saveAct.setStatusTip('Salvar as coordenadas')
         saveAct.triggered.connect(self.file_save)
         
-        ##--About menu options
-        #aboutAct = QAction(QIcon(''), '&Sobre', self)        
-        #aboutAct.setStatusTip('Sobre o Programa')
-        #aboutAct.triggered.connect(QDesktopServices.openUrl(Qt.QUrl('https://github.com/esh64/SelecionarROI/blob/master/README.md')))
-        
         #menu bar
         self.menubar = self.menuBar()
         
@@ -263,7 +263,7 @@ class SelecionadorROI(QMainWindow):
     def openFileNameDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        self.openedImageFilename, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*)", options=options)
+        self.openedImageFilename, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "camera1","All Files (*)", options=options)
         if self.openedImageFilename:
             pixmap = QPixmap(self.openedImageFilename)
             self.picture.label.setPixmap(pixmap)
